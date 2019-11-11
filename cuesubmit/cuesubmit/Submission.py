@@ -47,6 +47,7 @@ def buildNukeCmd(layerData):
     renderCommand += '-x {}'.format(nukeFile)
     return renderCommand
 
+
 def buildBlenderCmd(layerData):
     """From a layer, build a Blender render command."""
     blenderFile = layerData.cmd.get('blenderFile')
@@ -104,6 +105,7 @@ def buildNukeLayer(layerData, lastLayer):
 def buildBlenderLayer(layerData, lastLayer):
     blenderCmd = buildBlenderCmd(layerData)
     return buildLayer(layerData, blenderCmd, lastLayer)
+
 
 def buildShellLayer(layerData, lastLayer):
     return buildLayer(layerData, layerData.cmd['commandTextBox'], lastLayer)
