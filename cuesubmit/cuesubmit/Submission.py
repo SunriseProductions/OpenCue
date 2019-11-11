@@ -47,6 +47,17 @@ def buildNukeCmd(layerData):
     renderCommand += '-x {}'.format(nukeFile)
     return renderCommand
 
+
+def buildHoudiniCmd(layerData):
+    """From a layer, build a Houdini Render command."""
+    houdiniFile = layerData.cmd.get('houdiniFile')
+    if not houdiniFile:
+        raise ValueError('No Houdini file provided. Cannot submit job.')
+    renderCommand = '{renderCmd} {renderScript} {houdiniFile}'.format(
+        renderCmd=Constants.HOUDINI_RENDER_CMD, renderScript=None, houdiniFile=houdiniFile)
+    return renderCommand
+
+
 def buildBlenderCmd(layerData):
     """From a layer, build a Blender render command."""
     blenderFile = layerData.cmd.get('blenderFile')
@@ -100,6 +111,9 @@ def buildNukeLayer(layerData, lastLayer):
     nukeCmd = buildNukeCmd(layerData)
     return buildLayer(layerData, nukeCmd, lastLayer)
 
+def buildHoudiniLayer(layerData, lastLayer):
+    houdiniCmd = buildHoudiniCmd(layerData)
+    return buildLayer(layerData, houdiniCmd, lastLayer)
 
 def buildBlenderLayer(layerData, lastLayer):
     blenderCmd = buildBlenderCmd(layerData)
@@ -121,10 +135,14 @@ def submitJob(jobData):
             layer = buildShellLayer(layerData, lastLayer)
         elif layerData.layerType == JobTypes.JobTypes.NUKE:
             layer = buildNukeLayer(layerData, lastLayer)
+        elif layerData.layerType == JobTypes.JobTypes.HOUDINI:
+            layer = buildHoudiniLayer(layerData, lastLayer)
         elif layerData.layerType == JobTypes.JobTypes.BLENDER:
             layer = buildBlenderLayer(layerData, lastLayer)
         else:
             raise ValueError('unrecognized layer type %s' % layerData.layerType)
         outline.add_layer(layer)
+        for key, val in layerData.env.items():
+            outline.set_env(key, val, True)
         lastLayer = layer
     return cuerun.launch(outline, use_pycuerun=False)

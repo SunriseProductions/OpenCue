@@ -153,6 +153,36 @@ class ShellSettings(BaseSettingsWidget):
         self.commandTextBox.setText(commandData.get('commandTextBox', ''))
 
 
+class BaseHoudiniSettings(BaseSettingsWidget):
+    """Standard Houdini settings widget to be used from outside Houdini."""
+    def __init__(self, parent=None, *args, **kwargs):
+        super(BaseHoudiniSettings, self).__init__(parent=parent)
+
+        self.fileInput = Widgets.CueLabelLineEdit('Houdini File:')
+        self.outputPath = Widgets.CueLabelLineEdit('Output Path (Optional):')
+
+        self.setupUi()
+        self.setupConnections()
+
+    def setupUi(self):
+        self.mainLayout.addWidget(self.fileInput)
+        self.mainLayout.addWidget(self.outputPath)
+
+    def setupConnections(self):
+        self.fileInput.lineEdit.textChanged.connect(self.dataChanged.emit)
+        self.outputPath.lineEdit.textChanged.connect(self.dataChanged.emit)
+
+    def getCommandData(self):
+        return {
+            'houdiniFile': self.fileInput.text(),
+            'outputPath': self.outputPath.text(),
+        }
+
+    def setCommandData(self, commandData):
+        self.fileInput.setText(commandData.get('houdiniFile', ''))
+        self.outputPath.setText(commandData.get('outputPath', ''))
+
+
 class BaseBlenderSettings(BaseSettingsWidget):
     """Standard Blender settings widget to be used from outside Blender."""
 
@@ -181,7 +211,7 @@ class BaseBlenderSettings(BaseSettingsWidget):
         self.outputPath.lineEdit.textChanged.connect(self.dataChanged.emit)
       
     def setCommandData(self, commandData):
-        self.fileInput.setText(commandData.get('nukeFile', ''))
+        self.fileInput.setText(commandData.get('blenderFile', ''))
         self.outputPath.setText(commandData.get('outputPath', ''))
         self.outputSelector.setChecked(commandData.get('outputFormat', ''))
     
