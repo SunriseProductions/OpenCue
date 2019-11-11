@@ -92,6 +92,7 @@ def load_outline(path):
 
     return ol
 
+
 def load_json(json):
     """
     Parse a json repesentation of an outline file.
@@ -201,6 +202,7 @@ def quick_outline(layer):
     ol = Outline(name=layer.get_name(), current=True)
     ol.add_layer(layer)
     return ol
+
 
 class Outline(object):
     """The outline class represents a single outline script."""

@@ -134,12 +134,10 @@ class Nimby(threading.Thread):
         self._openEvents()
         waitStartTime = time.time()
         try:
-            self.results = select.select(self.fileObjList, [], [],
-                                         rqconstants.MINIMUM_IDLE)
+            self.results = select.select(self.fileObjList, [], [], rqconstants.MINIMUM_IDLE)
         except:
             pass
-        if self.active and self.results[0] == [] and \
-           self.rqCore.machine.isNimbySafeToUnlock():
+        if self.active and self.results[0] == [] and self.rqCore.machine.isNimbySafeToUnlock():
             self._closeEvents()
             self.unlockNimby(asOf=waitStartTime)
             self.unlockedIdle()

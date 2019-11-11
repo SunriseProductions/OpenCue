@@ -58,6 +58,7 @@ def import_backend_module(name):
     return __import__("outline.backend.%s" % name,
                       globals(), locals(), [name])
 
+
 def get_launch_facility():
     """
     Return the name of the default launch facility.

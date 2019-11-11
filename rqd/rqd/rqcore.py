@@ -287,7 +287,7 @@ class FrameAttendantThread(threading.Thread):
             frameInfo.exitSignal = 0
 
         try:
-            statFile  = open(tempStatFile,"r")
+            statFile = open(tempStatFile, "r")
             frameInfo.realtime = statFile.readline().split()[1]
             frameInfo.utime = statFile.readline().split()[1]
             frameInfo.stime = statFile.readline().split()[1]

@@ -66,7 +66,7 @@ class Shell(Layer):
     def __init__(self, name, **args):
         Layer.__init__(self, name, **args)
 
-        ## require the cmd argument
+        # require the cmd argument
         self.require_arg("command")
         self.set_arg("proxy_enable", False)
 
@@ -110,6 +110,7 @@ class ShellCommand(Frame):
         """Execute the shell command."""
         self.system(self.get_arg("command"), frame=frame_set[0])
 
+
 class ShellScript(Frame):
     """
     Copies the given script into frame's session 
@@ -125,6 +126,7 @@ class ShellScript(Frame):
 
     def _execute(self, frames):
         self.system(self.get_file("script"), frame=frames[0])
+
 
 def shell(name, command, **args):
     """

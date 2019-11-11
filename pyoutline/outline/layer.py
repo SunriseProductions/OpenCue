@@ -77,6 +77,7 @@ class LayerType(type):
                 pass
         return r
 
+
 class Layer(with_metaclass(LayerType, object)):
     """The base class for all outline modules."""
 
@@ -134,10 +135,11 @@ class Layer(with_metaclass(LayerType, object)):
         self.__preprocess_layers = []
 
         logger.debug("module %s loaded from %s" % (self.__class__.__name__,
-                                                  os.path.realpath(__file__)))
+                                                   os.path.realpath(__file__)))
+
     def _after_init(self, ol):
         """
-        This method should be implmented by a subclass. Executed
+        This method should be implemented by a subclass. Executed
         after a layer has been initialized and added to an outline.
         """
         pass
@@ -152,7 +154,7 @@ class Layer(with_metaclass(LayerType, object)):
 
     def _after_parented(self, parent):
         """
-        This method should be implmented by a subclass. Executed after a
+        This method should be implemented by a subclass. Executed after a
         layer has been initialized and added as a child to another layer.
         """
         pass
@@ -167,7 +169,7 @@ class Layer(with_metaclass(LayerType, object)):
 
     def _before_execute(self):
         """
-        This method should be implemened by a subclass.  Executed before
+        This method should be implemented by a subclass.  Executed before
         all execute checks are started.
         """
         pass
@@ -181,7 +183,7 @@ class Layer(with_metaclass(LayerType, object)):
 
     def _after_execute(self):
         """
-        This method should be implemened by a subclass. Executed after
+        This method should be implemented by a subclass. Executed after
         the execute() method has been run even if the frame failed.
         Used for doing cleanup operations that should run even
         after a frame failure.
@@ -201,7 +203,7 @@ class Layer(with_metaclass(LayerType, object)):
 
     def system(self, cmd, ignore_error=False, frame=None):
         """
-        A convinience method for calling io.system().  Shell out
+        A convenience method for calling io.system().  Shell out
         to the given command and wait for it to finish.
 
         @see: L{io.system}
@@ -277,7 +279,6 @@ class Layer(with_metaclass(LayerType, object)):
 
         self.__children.append(layer)
         layer.after_parented(self)
-
 
     def add_event_listener(self, event_type, callback):
         self.__evh.add_event_listener(event_type, callback)
@@ -410,20 +411,20 @@ class Layer(with_metaclass(LayerType, object)):
         # Double check that all required arguments are set.
         self.check_required_args()
 
-        # Check for the existance of required inputs.
+        # Check for the existence of required inputs.
         self.check_input(frames)
 
-        # Set all post set shot environement variables.
+        # Set all post set shot environment variables.
         for env_k, env_v in self.__outline.get_env().items():
             if not env_v[1]:
-                logger.info("Setting post-set shot environement var: %s %s",
+                logger.info("Setting post-set shot environment var: %s %s",
                             env_k, env_v[0])
                 os.environ[env_k] = env_v[0]
 
         # Set all layer specific post set shot env variables
         try:
             for env_k, env_v in self.__env.items():
-                logger.info("Setting post-set shot environement var: %s %s",
+                logger.info("Setting post-set shot environment var: %s %s",
                             env_k, env_v)
                 os.environ[str(env_k)] = str(env_v)
         except AttributeError as e:
@@ -437,10 +438,10 @@ class Layer(with_metaclass(LayerType, object)):
         for child in self.__children:
             child.execute(frame)
 
-        # Run the subclasse's _post_execute method
+        # Run the subclass' _post_execute method
         self.after_execute()
 
-        ## Check the existance of required output
+        # Check the existance of required output
         self.check_output(frames)
 
     def setup_args_override(self):
@@ -1184,6 +1185,7 @@ class LayerPreProcess(Frame):
                     % len(self.get_outputs()))
         self.get_creator().put_data("ol:outputs",
                                     self.get_outputs(), force=True)
+
 
 class LayerPostProcess(Frame):
     """

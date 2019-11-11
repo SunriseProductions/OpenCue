@@ -104,7 +104,6 @@ class Dispatcher(object):
         self.__conn = sqlite3.connect(":memory:")
         self.__create_dispatch_list()
 
-
     def dispatch(self):
         try:
             while True:

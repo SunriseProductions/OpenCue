@@ -152,7 +152,7 @@ if __name__ == "__main__":
         SHORT_ARGS = 'hsv'
         LONG_ARGS = ['help', 'lh', 'ulh', 'ulp=', 'lp=', 'nimbyoff', 'nimbyon',
                      'exit', 'exit_now', 'test_edu_frame', 'test_script_frame',
-                     'test_script_frame_mac', "kill=","restart", "restart_now",
+                     'test_script_frame_mac', "kill=", "restart", "restart_now",
                      "reboot", "reboot_now", "getproxy=", "s"]
         newargs = [re.sub(r"^(-\w{2,})$", r"-\1", arg) for arg in startArgv]
         opts, argv = getopt.getopt(newargs, SHORT_ARGS, LONG_ARGS)
