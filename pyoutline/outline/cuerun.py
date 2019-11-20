@@ -73,7 +73,7 @@ def get_launch_facility():
 
 def launch(ol, use_pycuerun=True, **args):
     """
-    A simple convinience method for launching an outline script with
+    A simple convenience method for launching an outline script with
     the most common options.  If you need additional options,
     use the OutlineLauncher class.
 
@@ -84,7 +84,7 @@ def launch(ol, use_pycuerun=True, **args):
       - B{wait}: Wait on the job to complete.
       - B{test}: Wait on the job to complete but thrown an exception if
         any frames fail.
-      - B{backend}: Sets the queing system backend.  See L{config} for the
+      - B{backend}: Sets the queueing system backend.  See L{config} for the
         default queueing system.
 
     @type ol: L{Outline}

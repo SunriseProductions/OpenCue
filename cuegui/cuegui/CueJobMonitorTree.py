@@ -285,7 +285,7 @@ class CueJobMonitorTree(cuegui.AbstractTreeWidget.AbstractTreeWidget):
 
                     self.updateSoon()
 
-    def addShow(self, show, update = True):
+    def addShow(self, show, update=True):
         """Adds a show to the list of monitored shows
         @type  show: Show name
         @param show: string

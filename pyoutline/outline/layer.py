@@ -587,6 +587,7 @@ class Layer(with_metaclass(LayerType, object)):
         return self.__outline.get_session().sym_file(src,
                                                      layer=self,
                                                      rename=rename)
+
     def put_file(self, src, rename=None):
         """
         Copy the given file into the layer's session path.  If
@@ -975,12 +976,13 @@ class Layer(with_metaclass(LayerType, object)):
         except:
             raise LayerException("An input by the name %s does not exist."
                                  % name)
+
     def get_output(self, name):
         """
         Return the named output.
 
         @rtype:  outline.io.Path
-        @return: the assoicated io.Path object from the given name.
+        @return: the associated io.Path object from the given name.
         """
         try:
             return self.__output[name]
