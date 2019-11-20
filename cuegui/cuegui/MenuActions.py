@@ -22,6 +22,8 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
+import os
+import re
 
 from builtins import filter
 from builtins import str
@@ -29,6 +31,8 @@ from builtins import object
 import glob
 import subprocess
 import time
+
+import sun_rv.rv_push
 
 import pexpect
 from PySide2 import QtGui
@@ -837,6 +841,32 @@ class FrameActions(AbstractActions):
         except Exception as e:
             QtWidgets.QMessageBox.critical(None, "Preview Error",
                                            "Error displaying preview frames, %s" % e)
+
+    openInRV_info = ["Open in RV", None, "rv"]
+    def openInRV(self, rpcObjects=None):
+        try:
+            job = self._getSource()
+            frame = self._getOnlyFrameObjects(rpcObjects)[0]
+            __log_path = cuegui.Utils.getFrameLogFile(job, frame)
+
+            with open(__log_path, 'r') as fp:
+                for line in fp.readlines():
+                    output_path_inline = re.search(r'Writing (\S+) took', line)
+                    if not output_path_inline:
+                        output_path_inline = re.search(r'SUCCESS: ([a-zA-Z0-9-_/]+\.mov)', line)
+                    if output_path_inline:
+                        output_path = output_path_inline.group(1)
+                        print(output_path)
+
+            if output_path and os.path.exists(output_path):
+                rv_push = sun_rv.rv_push._build_rv_path()
+                tag = 'render'
+                command = [rv_push, '-tag', tag, 'set', output_path]
+                subprocess.Popen(command)
+
+        except Exception as e:
+            QtWidgets.QMessageBox.critical(None, "Preview Error",
+                                           "Error opening frames in RV, %s" % e)
 
     previewAovs_info = ["Preview All", None, "previewAovs"]
     def previewAovs(self, rpcObjects=None):
