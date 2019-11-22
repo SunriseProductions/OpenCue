@@ -851,7 +851,7 @@ class FrameActions(AbstractActions):
 
             with open(__log_path, 'r') as fp:
                 for line in fp.readlines():
-                    output_path_inline = re.search(r'Writing (\S+) took', line)
+                    output_path_inline = re.search(r'Writing ([a-zA-Z0-9-_/.]+\.exr) took', line)
                     if not output_path_inline:
                         output_path_inline = re.search(r'SUCCESS: ([a-zA-Z0-9-_/]+\.mov)', line)
                     if output_path_inline:

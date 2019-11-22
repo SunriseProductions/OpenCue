@@ -26,9 +26,10 @@ The following steps can be followed to mount the logging directory and install R
 ## Artist Machines (pycue, pyoutline)
 
 Submitting job outlines to the OpenCue render farm requires the pyoutline and pycue modules on artist machines. Artist machines has access to a central virtual environment with pycue and pyoutline installed. The python interpreter from the virtual environment will be used to run submission scripts.  
-The current submission scripts only work for Nuke renders, submission scripts for other DCC applications can be easily implemented.  
-The virtual environment will be mounted from a server location on startup. Environment variable `CUE_PYTHON_PATH` has to point to a valid python interpreter with access to pycue and pyoutline modules.
+The current submission scripts only work for Nuke renders. Submission scripts for other DCC applications can be easily implemented.  
+The virtual environment will be mounted from a server location on startup. Environment variable `CUE_PYTHON_PATH` has to point to a valid python interpreter with access to pycue and pyoutline modules. Environment variable `CUEBOT_HOSTS` has to point to a valid cuebot server.
 
+- Environment variables path: `/etc/environment`
 - Virtual environment mount location: `/opencue/venv`
 - `CUE_PYTHON_PATH` points to: `/opencue/venv/bin/python`
 - Currently `CUE_PYTHON_PATH` gets set on launching Nuke, and is set in the following config file, `/sunrise/tools/jbm1/pipeline-jbm1/config/sun_shot_launcher/nuke_environment.yaml`.
