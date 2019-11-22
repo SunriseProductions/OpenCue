@@ -32,7 +32,10 @@ import glob
 import subprocess
 import time
 
-import sun_rv.rv_push
+try:
+    import sun_rv.rv_push
+except ImportError:
+    pass
 
 import pexpect
 from PySide2 import QtGui
@@ -859,10 +862,14 @@ class FrameActions(AbstractActions):
                         print(output_path)
 
             if output_path and os.path.exists(output_path):
-                rv_push = sun_rv.rv_push._build_rv_path()
-                tag = 'render'
-                command = [rv_push, '-tag', tag, 'set', output_path]
-                subprocess.Popen(command)
+                if sun_rv:
+                    rv_push = sun_rv.rv_push._build_rv_path()
+                    tag = 'render'
+                    command = [rv_push, '-tag', tag, 'set', output_path]
+                    result = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+                    out, err = result.communicate()
+                    if result.returncode != 0:
+                        print('Error: \n\t\tERR: {}\n\t\tOUT: {}'.format(err, out))
 
         except Exception as e:
             QtWidgets.QMessageBox.critical(None, "Preview Error",
