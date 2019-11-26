@@ -11,7 +11,7 @@ RQD is run as a systemd daemon on startup.
   - Virtual environment: `/usr/share/rqd/venv`
   - RQD config: `/usr/share/rqd/rqd.conf`
 - Command to run RQD on artist machine: `/usr/share/rqd/venv/bin/rqd -d -c /usr/share/rqd/rqd.conf`
-- RQD systemd daemon location: `/etc/systemd/system/rqd.service`
+- RQD systemd service location: `/etc/systemd/system/rqd.service`
 - Command to run RQD on dedicated render node: `/usr/share/rqd/venv/bin/rqd -d`
 - Environment path: `/etc/environment`
 - Logging path: `/opencue/logs`
@@ -38,6 +38,7 @@ The virtual environment will be mounted from a server location on startup. Envir
 To setup the environment variables and mount scripts for artists, the following steps can be followed.
 
 1. `ansible-playbook -i vars/centos7.yml tasks/mount-opencue.yml`
+2. `ansible-playbook -i vars/centos7.yml tasks/opencue_environment.yml`
 
 
 ## CueGUI installation (wranglers and admins)
