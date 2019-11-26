@@ -435,7 +435,9 @@ class FrameAttendantThread(threading.Thread):
                         # Attempting mkdir for missing logdir
                         msg = "No Error"
                         try:
-                            os.makedirs(runFrame.log_dir)
+                            old_mask = os.umask(000)
+                            os.makedirs(runFrame.log_dir, 0775)
+                            os.umask(old_mask)
                             os.chmod(runFrame.log_dir, 0777)
                         except Exception, e:
                             # This is expected to fail when called in abq
