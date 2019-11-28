@@ -32,10 +32,7 @@ import glob
 import subprocess
 import time
 
-try:
-    import sun_rv.rv_push
-except ImportError:
-    pass
+from distutils.spawn import find_executable
 
 import pexpect
 from PySide2 import QtGui
@@ -852,6 +849,7 @@ class FrameActions(AbstractActions):
             frame = self._getOnlyFrameObjects(rpcObjects)[0]
             __log_path = cuegui.Utils.getFrameLogFile(job, frame)
 
+            # todo: find better solution than reading log...
             with open(__log_path, 'r') as fp:
                 for line in fp.readlines():
                     output_path_inline = re.search(r'Writing ([a-zA-Z0-9-_/.]+\.exr) took', line)
@@ -861,9 +859,9 @@ class FrameActions(AbstractActions):
                         output_path = output_path_inline.group(1)
                         print(output_path)
 
+            rv_push = find_executable('rvpush')
             if output_path and os.path.exists(output_path):
-                if sun_rv:
-                    rv_push = sun_rv.rv_push._build_rv_path()
+                if rv_push and os.path.exists(rv_push):
                     tag = 'render'
                     command = [rv_push, '-tag', tag, 'set', output_path]
                     result = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
