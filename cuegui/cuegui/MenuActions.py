@@ -864,10 +864,7 @@ class FrameActions(AbstractActions):
                 if rv_push and os.path.exists(rv_push):
                     tag = 'render'
                     command = [rv_push, '-tag', tag, 'set', output_path]
-                    result = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-                    out, err = result.communicate()
-                    if result.returncode != 0:
-                        print('Error: \n\t\tERR: {}\n\t\tOUT: {}'.format(err, out))
+                    subprocess.Popen(command)
 
         except Exception as e:
             QtWidgets.QMessageBox.critical(None, "Preview Error",
